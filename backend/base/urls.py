@@ -16,6 +16,7 @@ urlpatterns = [
     path('users/profile/edit/', views.editUserProfile),
     path('users/', views.viewUsers),
 
-    path('orders/add/', views.setOrderItem)
+    path('orders/add/', views.setOrderItem),
+    path('orders/<str:key>/', views.viewOrderById),
 
 ]

@@ -31,7 +31,7 @@ function OrderPage({history}) {
     if(cartItem.length == 0){
         history.push('/')
     }
-
+    console.log('mian page')
     useEffect(() => {
         if (success) {
             history.push(`/order/${order._id}`)

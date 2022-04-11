@@ -11,6 +11,7 @@ import UserProfilePage from './screens/UserProfilePage'
 import ShippingPage from './screens/ShippingPage'
 import PaymentPage from './screens/PaymentPage.js'
 import OrderPage from './screens/OrderPage'
+import OrderDetailPage from './screens/OrderDetailPage.js'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path = '/shipping' component = {ShippingPage}/>
             <Route path = '/payment' component = {PaymentPage}/>
             <Route path = '/placeorder' component = {OrderPage}/>
+            <Route path = '/order/:id' component= {OrderDetailPage}/>
         </Container>
       </main>
       <Footer/>

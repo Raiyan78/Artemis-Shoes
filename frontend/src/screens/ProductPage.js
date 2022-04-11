@@ -18,15 +18,18 @@ function ProductPage({match, history}) {
   const productDetail = useSelector (state => state.productDetail)
   const {loading, error, product } = productDetail
 
+  console.log('before dispatch')
+
   useEffect(() => {
     dispatch(listProduct(match.params.id))
+    console.log('inside dispatch')
   }, [])
 
   const addToCart = () => {
     history.push(`/cart/${match.params.id}?qty=${quantity}`)
   }
   
-  
+  console.log('after dispatch')
   return (
     <div>
       {/* Home Page Btn */}

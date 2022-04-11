@@ -14,7 +14,7 @@ import {
     userDetailReducer, 
     userEditReducer,  } from './reducers/userReducers'
 
-import { orderCreateReducer } from './reducers/orderReducers'
+import { orderCreateReducer, orderDetailReducer } from './reducers/orderReducers'
 
 
 const reducer = combineReducers({
@@ -26,6 +26,7 @@ const reducer = combineReducers({
     userDetails : userDetailReducer,
     userEditProfile : userEditReducer,
     orderCreate : orderCreateReducer,
+    orderDetail : orderDetailReducer,
     
 })
 

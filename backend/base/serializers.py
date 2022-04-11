@@ -5,7 +5,8 @@ from .models import Product, Order, OrderItem, ShippingAddress
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-#Turn models into JSON format
+#Serializes the data to be readable by the frontned
+
 class ProductSerialization(serializers.ModelSerializer):
     class Meta:
        model = Product 
@@ -65,8 +66,7 @@ class OrderSerialization(serializers.ModelSerializer):
 
     def get_shippingAddress(self, obj):
         try:
-            address = ShippingAddressSerialization(
-                obj.shippingaddress, many=False).data
+            address = ShippingAddressSerialization(obj.shippingaddress, many=False).data
         except:
             address = False
         return address
