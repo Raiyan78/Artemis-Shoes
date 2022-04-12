@@ -94,11 +94,19 @@ def viewUsers(request):
     serializer = UserSerialization(users, many = True)
     return Response(serializer.data)
 
-# view profile
+# non admin user profile view
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def viewUserProfile(request):
+def viewUser(request):
     user = request.user
+    serializer = UserSerialization(user, many=False)
+    return Response(serializer.data)
+    
+#admin user profile view
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def viewUserById(request, key):
+    user = User.objects.get(id=key)
     serializer = UserSerialization(user, many=False)
     return Response(serializer.data)
 
@@ -115,6 +123,25 @@ def editUserProfile(request):
     user.email = data['email']
 
     user.save()
+
+    return Response(serializer.data)
+
+#admin update user profile
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def editUser(request, key):
+    user = User.objects.get(id = key)
+    
+
+    data = request.data
+
+    user.password = make_password(data['password'])
+    user.email = data['email']
+    user.is_staff = data['is_staff']
+
+    user.save()
+
+    serializer = UserSerialization(user, many=False)
 
     return Response(serializer.data)
 
@@ -174,12 +201,14 @@ def setOrderItem(request):
         serializer = OrderSerialization(order, many = False)
         return Response(serializer.data)
 
+
+
+#view order by id
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def viewOrderById(request, key):
 
     user = request.user
-
     try:
         order = Order.objects.get(_id=key)
         if user.is_staff or order.user == user:
@@ -189,7 +218,32 @@ def viewOrderById(request, key):
             Response({'detail': 'Not authorized to view this order'},
                      status=status.HTTP_400_BAD_REQUEST)
     except:
-        return Response({'detail': 'Order does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'detail': 'Order does not1fawe'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+#view order of each user
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def viewOrderByUser(request):
+    user = request.user
+    orders = user.order_set.all()
+
+    serializer = OrderSerialization(orders, many = True)
+
+    return Response(serializer.data)
+
+#delete user
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def delUser(request, key):    
+    try:
+        u = User.objects.get(id = key)
+        u.delete()
+        return Response('User deleted successfully')
+        #messages.sucess(request, "The user is deleted")
+    except:
+      return Response({'detail': 'User does not exist'}, status=status.HTTP_204_NO_CONTENT)    
+    
 
     
 

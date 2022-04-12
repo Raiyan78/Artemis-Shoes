@@ -16,6 +16,15 @@ import {
     USER_PROFILE_CHANGE_SUC,
     USER_PROFILE_CHANGE_REQ,
     USER_PROFILE_CHANGE_RESET,
+
+    USER_LIST_REQ,
+    USER_LIST_SUC,
+    USER_LIST_FAIL,
+    USER_LIST_RESET,
+
+    USER_DELETE_REQ,
+    USER_DELETE_SUC,
+    USER_DELETE_FAIL
     
     } from '../constants/userConstants'
 
@@ -52,6 +61,7 @@ export const logout = () => (dispatch) =>{
     localStorage.removeItem('userDetail')
     dispatch({type: USER_LOGOUT})
     dispatch({type: USER_PROFILE_RESET})
+    dispatch({type: USER_LIST_RESET})
 }
 
 export const register = (username, password, email) => async(dispatch)=>{
@@ -154,6 +164,68 @@ export const editProfile = (user) => async(dispatch, getState) => {
 
     }catch(error){
         dispatch({type: USER_PROFILE_CHANGE_FAIL, 
+            payload: error.response && error.response.data.message 
+                        ?error.response.data.message : error.message})
+    }
+}
+
+export const getUserList = () => async(dispatch, getState)=>{
+    try {
+        dispatch({
+            type: USER_LIST_REQ
+        })
+        //GET THE TOKEN FOR AUTH
+        const {
+            userLogin: {userDetail},
+        } = getState()
+
+        const config = {headers : {'Content-type' : 'application/json',
+                                         Authorization: `Bearer ${userDetail.token}`
+                                     },
+                        
+                        }
+
+        const {data} = await axios.get(`/api/users/`,
+                            config
+                            )
+        dispatch({
+            type: USER_LIST_SUC,
+            payload : data
+        })
+
+    } catch (error) {
+        dispatch({type: USER_LIST_FAIL, 
+            payload: error.response && error.response.data.message 
+                        ?error.response.data.message : error.message})
+    }
+}
+
+export const deleteUser = (id) => async(dispatch, getState)=>{
+    try {
+        dispatch({
+            type: USER_DELETE_REQ
+        })
+        //GET THE TOKEN FOR AUTH
+        const {
+            userLogin: {userDetail},
+        } = getState()
+
+        const config = {headers : {'Content-type' : 'application/json',
+                                         Authorization: `Bearer ${userDetail.token}`
+                                     },
+                        
+                        }
+
+        const {data} = await axios.delete(`/api/users/delete/${id}`,
+                            config
+                            )
+        dispatch({
+            type: USER_DELETE_SUC,
+            payload : data
+        })
+
+    } catch (error) {
+        dispatch({type: USER_DELETE_FAIL, 
             payload: error.response && error.response.data.message 
                         ?error.response.data.message : error.message})
     }

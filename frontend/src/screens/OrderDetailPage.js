@@ -17,7 +17,7 @@ function OrderDetailPage({match}) {
     const totalItem = 0
 
     if(!loading && !error){
-        const totalItem = order.orderItems.reduce((acc, item) => acc +item.quantity * item.price, 0)
+        order.totalItem = order.orderItems.reduce((acc, item) => acc +item.quantity * item.price, 0)
     }
     
 
@@ -101,7 +101,7 @@ function OrderDetailPage({match}) {
                     <ListGroup.Item>
                         <Row>
                             <Col md={6}>Total</Col>
-                            <Col md={6}>${totalItem}</Col>
+                            <Col md={6}>${order.totalItem}</Col>
                         </Row>
                     </ListGroup.Item>
 

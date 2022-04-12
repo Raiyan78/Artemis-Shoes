@@ -5,7 +5,10 @@ import {
     ORDER_DETAIL_REQ,
     ORDER_DETAIL_SUC,
     ORDER_DETAIL_FAIL,
-
+    ORDER_LIST_USER_REQ,
+    ORDER_LIST_USER_SUC,
+    ORDER_LIST_USER_FAIL,
+    ORDER_LIST_USER_RESET,
 
 } from '../constants/orderConstants'
 
@@ -58,6 +61,7 @@ export const createOrder = (order) => async(dispatch, getState) => {
     }
 }
 
+//view order by id{key}
 export const viewOrder = (key) => async(dispatch, getState) => {
     try{
         dispatch({
@@ -89,6 +93,42 @@ export const viewOrder = (key) => async(dispatch, getState) => {
 
     }catch(error){
         dispatch({type: ORDER_DETAIL_FAIL, 
+            payload: error.response && error.response.data.message 
+                        ?error.response.data.message : error.message})
+    }
+}
+
+//view order by per user
+export const viewMyOrderList = () => async(dispatch, getState) => {
+    try{
+        dispatch({
+            type: ORDER_LIST_USER_REQ
+        })
+
+        //Get the token
+        const {
+            userLogin: {userDetail},
+        } = getState()
+
+        const config = 
+            {
+                headers : {
+                    'Content-type' : 'application/json',
+                    Authorization : `Bearer ${userDetail.token}`
+                },        
+            }
+
+        const {data} = await axios.get(
+                `/api/orders/myorders/`,
+                config
+            )
+        dispatch({
+            type: ORDER_LIST_USER_SUC,
+            payload : data
+        })
+
+    }catch(error){
+        dispatch({type: ORDER_LIST_USER_FAIL, 
             payload: error.response && error.response.data.message 
                         ?error.response.data.message : error.message})
     }

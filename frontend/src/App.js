@@ -12,7 +12,8 @@ import ShippingPage from './screens/ShippingPage'
 import PaymentPage from './screens/PaymentPage.js'
 import OrderPage from './screens/OrderPage'
 import OrderDetailPage from './screens/OrderDetailPage.js'
-
+import UserListPage from './screens/UserListPage'
+import UserProfileById from './screens/UserProfileById'
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
             <Route path = '/payment' component = {PaymentPage}/>
             <Route path = '/placeorder' component = {OrderPage}/>
             <Route path = '/order/:id' component= {OrderDetailPage}/>
+            <Route path = '/admin/users/' component= {UserListPage}/>
+            <Route path = '/admin/user/:id' component= {UserProfileById}/>
+            
         </Container>
       </main>
       <Footer/>
