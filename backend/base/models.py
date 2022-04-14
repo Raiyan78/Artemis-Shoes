@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
 # Used PILLOw to process image inside database
 
 class Product(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     name = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True,
-                              default='/placeholder.png')
+    image = models.ImageField(null=True, blank=True, default='/sample.jpg')
     brand = models.CharField(max_length=200, null=True, blank=True)
     category = models.CharField(max_length=200, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -19,6 +19,16 @@ class Product(models.Model):
     countInStock = models.IntegerField(null=True, blank=True, default=0)
     createdAt = models.DateTimeField(auto_now_add=True)
     _id = models.AutoField(primary_key=True, editable=False)
+
+    # def save(self):
+    #     super().save()  # saving image first
+
+    #     img = Image.open(self.image.path) # Open image using self
+
+    #     if img.height > 300 or img.width > 300:
+    #         new_img = (300, 300)
+    #         img.thumbnail(new_img)
+    #         img.save(self.image.path)  # saving image at the same path
 
     def __str__(self):
         return self.name

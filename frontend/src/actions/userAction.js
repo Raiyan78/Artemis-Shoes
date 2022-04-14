@@ -24,7 +24,13 @@ import {
 
     USER_DELETE_REQ,
     USER_DELETE_SUC,
-    USER_DELETE_FAIL
+    USER_DELETE_FAIL,
+
+    USER_UPDATE_REQ,
+    USER_UPDATE_SUC,
+    USER_UPDATE_FAIL,
+    USER_UPDATE_RESET
+
     
     } from '../constants/userConstants'
 
@@ -230,3 +236,44 @@ export const deleteUser = (id) => async(dispatch, getState)=>{
                         ?error.response.data.message : error.message})
     }
 }
+
+
+export const updateProfile = (user) => async(dispatch, getState) => {
+    try{
+        dispatch({
+            type: USER_UPDATE_REQ
+        })
+
+        const {
+            userLogin: {userDetail},
+        } = getState()
+
+        const config = 
+            {
+                headers : {
+                    'Content-type' : 'application/json',
+                    Authorization: `Bearer ${userDetail.token}`,
+                        
+                },        
+            }
+
+        const {data} = await axios.put(
+                `/api/users/profile/edit/${user.id}`,
+                user,
+                config
+            )
+        dispatch({
+            type: USER_UPDATE_SUC,
+            payload : data
+        })
+
+        //localStorage.setItem('userDetail', JSON.stringify(data))
+
+    }catch(error){
+        dispatch({type: USER_UPDATE_FAIL, 
+            payload: error.response && error.response.data.message 
+                        ?error.response.data.message : error.message})
+    }
+}
+
+

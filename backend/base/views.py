@@ -110,7 +110,7 @@ def viewUserById(request, key):
     serializer = UserSerialization(user, many=False)
     return Response(serializer.data)
 
-# update profile
+# update profile by user
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def editUserProfile(request):
@@ -126,7 +126,7 @@ def editUserProfile(request):
 
     return Response(serializer.data)
 
-#admin update user profile
+#update profile by admin
 @api_view(['PUT'])
 @permission_classes([IsAdminUser])
 def editUser(request, key):
@@ -135,7 +135,8 @@ def editUser(request, key):
 
     data = request.data
 
-    user.password = make_password(data['password'])
+    user.username = data['username']
+    #user.password = make_password(data['password'])
     user.email = data['email']
     user.is_staff = data['is_staff']
 
@@ -243,6 +244,65 @@ def delUser(request, key):
         #messages.sucess(request, "The user is deleted")
     except:
       return Response({'detail': 'User does not exist'}, status=status.HTTP_204_NO_CONTENT)    
+
+#admin delete product
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteProduct(request, key):
+    product = Product.objects.get(_id = key)
+    product.delete()
+
+    return Response('Product deleted')
+
+#admin view product
+@permission_classes([IsAdminUser])
+@api_view(['POST'])
+def createProduct(request):
+    user = request.user
+    product = Product.objects.create(
+        user = user,
+        name = 'Placeholder name',
+        brand = 'Brand',
+        category = 'category',
+        description = 'description',
+        rating = 0,
+        price = 0,
+        numReviews = 0,
+        countInStock = 0,
+    )
+    serializer = ProductSerialization(product, many = False)
+
+    return Response(serializer.data)
+
+@permission_classes([IsAdminUser])
+@api_view(['PUT'])
+def editProduct(request, key):
+    product = Product.objects.get(_id = key)
+
+    data = request.data
+
+    product.name = data['name']
+    product.brand = data['brand']
+    product.category = data['category']
+    product.description = data['description']
+    product.price = data['price']
+    product.countInStock = data['countInStock'] 
+
+    product.save()
+
+    # product = Product.objects.create(
+    #     user = user.name,
+    #     name = request.name,
+    #     brand = request.brand,
+    #     category = request.category,
+    #     description = request.description,
+    #     price = 0,
+    #     countInStock = 0,
+    # )
+
+    serializer = ProductSerialization(product, many = False)
+
+    return Response(serializer.data)
     
 
     

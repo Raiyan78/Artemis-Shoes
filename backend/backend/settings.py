@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -164,12 +164,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-MEDIA_ROOT = 'static/images' 
+STATIC_URL = '/static/'
+
 MEDIA_URL = '/images/'
 STATICFILES_DIR = [
-    BASE_DIR/'static',
+    BASE_DIR / 'static',
 ]
+
+MEDIA_ROOT = BASE_DIR/'static/images/' 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -179,3 +181,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = True #All URL allowed to call api
 
 TIME_ZONE = 'Asia/Dhaka'
+
+if os.getcwd() == '/app':
+    DEBUG = False

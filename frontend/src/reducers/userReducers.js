@@ -31,6 +31,11 @@ import {
         USER_PROFILE_VIEW_BY_ID_SUC,
         USER_PROFILE_VIEW_BY_ID_FAIL,
 
+        USER_UPDATE_REQ,
+        USER_UPDATE_SUC,
+        USER_UPDATE_FAIL,
+        USER_UPDATE_RESET
+
 
     
     } from '../constants/userConstants'
@@ -145,4 +150,20 @@ export const userViewById = (state = {}, action) => {
         default:
             return state
     }
+}
+
+export const userUpdateReducer = (state = { user : {} }, action) => {
+    switch(action.type){
+        case USER_UPDATE_REQ:
+            return {loading: true}
+        case USER_UPDATE_SUC:
+            return {loading: false, success: true}
+        case USER_DELETE_FAIL:
+            return {loading: false, error: action.payload}
+        case USER_UPDATE_RESET:
+            return { user:  { } }
+        default:
+            return state
+    }
+
 }

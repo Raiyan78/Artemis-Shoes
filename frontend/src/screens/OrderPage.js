@@ -7,7 +7,7 @@ import Message from '../components/Message';
 import { LinkContainer } from 'react-router-bootstrap'
 
 import { createOrder } from '../actions/orderAction'
-import { ORDER_RESET } from '../constants/orderConstants'
+import { ORDER_RESET, ORDER_LIST_USER_SUC } from '../constants/orderConstants'
 import { CART_RESET } from '../constants/cartConstants'
 
 function OrderPage({history}) {

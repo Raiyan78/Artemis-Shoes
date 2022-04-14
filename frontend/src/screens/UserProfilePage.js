@@ -26,16 +26,18 @@ function UserProfilePage({history}) {
     const {orders, loading} = orderList
 
     useEffect(()=> {
+      //load order list
+      dispatch(viewMyOrderList())
       if(!userDetail){                    //if user not logged in, redirect to login page
           history.push('/login')
       }
       else{
-        if(!user || !user.username || success){   //if user information state is loaded
+        if(!user || !user.username || success || user.id !== userDetail.id){   //if user information state is loaded
           dispatch({
             type: USER_PROFILE_CHANGE_RESET,
           })       
           dispatch(getUserDetail('profile'))
-          dispatch(viewMyOrderList())
+          // dispatch(viewMyOrderList())
         }
         else{
           setEmail(user.email)
@@ -87,7 +89,7 @@ function UserProfilePage({history}) {
 
         <Col md='8'>
           <h2>Previous Orders</h2>
-          {orders.map(item => (
+          {orders.slice(0).reverse().map(item => (
             <ListGroup key={item._id}>
               <ListGroup.Item variant= 'flush'>   
                 <h3>

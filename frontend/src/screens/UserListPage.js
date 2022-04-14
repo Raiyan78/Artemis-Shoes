@@ -51,7 +51,7 @@ function UserListPage() {
                             <td>{users.email}</td>
                             <td>{users.is_staff ? ("Employee") : null}</td>
                             <td>
-                                <LinkContainer to ={`/admin/user/${users.id}`}>
+                                <LinkContainer to ={`/admin/user/edit/${users.id}`}>
                                     <Button variant = 'light'> 
                                         edit
                                     </Button>

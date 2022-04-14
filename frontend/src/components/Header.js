@@ -71,10 +71,15 @@ function Header() {
                   //     <Nav.Link><i  className='fas fa-user'></i>Profile</Nav.Link>
                   // </LinkContainer>
                   <NavDropdown title ='Admin Actions' variant= 'dark'>
+
                     <LinkContainer to='/admin/users/'>
                       <NavDropdown.Item>Users</NavDropdown.Item>
                     </LinkContainer>
-                    
+
+                    <LinkContainer to='/admin/products/'>
+                      <NavDropdown.Item>Products</NavDropdown.Item>
+                    </LinkContainer>
+
                   </NavDropdown>
                     : 
                       null
