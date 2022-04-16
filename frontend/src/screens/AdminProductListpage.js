@@ -50,7 +50,9 @@ function AdminProductListpage({history}) {
     const createProductHandler = () =>{
         console.log('create product')
         dispatch(createProduct())
-    }
+    }      
+
+
 
     return loading ? (<Loader/> )
         : error ? (<Alert variant = 'danger'> Unauthorized </Alert>)

@@ -126,9 +126,20 @@ function OrderDetailPage({match}) {
                         </Row>
                     </ListGroup.Item>
                 </ListGroup>
+                <ListGroup className='my-3'>
+                        {order.isPaid 
+                            ? <Alert variant = 'success'>Paid! {order.paidAt.substring(0,10)}</Alert>
+                            : <Alert variant = 'danger'>Not paid</Alert>     
+                        }
+
+                        {order.isDelivered
+                            ? <Alert variant = 'success'>Delivered! {order.deliveredAt.substring(0,10)}</Alert>
+                            : <Alert variant = 'danger'>Not Delivered</Alert>     
+                        }   
+                </ListGroup>
             </Col>
         </Row>
     )
 }
 
-export default OrderDetailPage
+export default OrderDetailPage      

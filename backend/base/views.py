@@ -1,4 +1,5 @@
 from asyncio.windows_events import NULL
+from datetime import datetime
 from statistics import quantiles
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -168,6 +169,7 @@ def setOrderItem(request):
             taxPrice = data['taxPrice'],
             shippingPrice = data['shippingPrice'],
             totalPrice = data['totalPrice'],
+            
         )
 
         shippingAddress = ShippingAddress.objects.create(
@@ -303,6 +305,65 @@ def editProduct(request, key):
     serializer = ProductSerialization(product, many = False)
 
     return Response(serializer.data)
+
+#admin order view
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def viewOrders(request):
+    orders = Order.objects.all()
+
+    serializer = OrderSerialization(orders, many = True)
+
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def uploadImage(request):
+
+    data = request.data
+
+    productId = data['productId']
+    product = Product.objects.get(_id = productId)
+
+    product.image = request.FILES.get('image')
+    
+    product.save()
+
+    return Response('Image uploaded')
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def orderPaid(request, key):
+
+    order = Order.objects.get(_id = key)
+
+
+    order.isPaid = True
+
+    order.paidAt = datetime.now()
+
+    order.save()
+
+    return Response('Order is paid')
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def orderDelivered(request, key):
+
+    order = Order.objects.get(_id = key)
+
+    order.isDelivered = True
+
+    order.deliveredAt = datetime.now()
+
+    order.save()
+
+    return Response('Order is delivered')
+
+
+
+
     
 
     

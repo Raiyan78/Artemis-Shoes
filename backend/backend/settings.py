@@ -184,3 +184,5 @@ TIME_ZONE = 'Asia/Dhaka'
 
 if os.getcwd() == '/app':
     DEBUG = False
+
+USE_TZ = False

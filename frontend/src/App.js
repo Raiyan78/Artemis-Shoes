@@ -16,6 +16,7 @@ import UserListPage from './screens/UserListPage'
 import UserProfileById from './screens/UserProfileById'
 import AdminProductListpage from './screens/AdminProductListpage'
 import AdminProductPage from './screens/AdminProductPage'
+import AdminOrdersPage from './screens/AdminOrdersPage'
 
 function App() {
   return (
@@ -36,10 +37,13 @@ function App() {
                 <Route path = '/placeorder' component = {OrderPage}/>
                 <Route path = '/order/:id' component= {OrderDetailPage}/>
 
+                <Route path = '/admin/orders/' component= {AdminOrdersPage}/>
                 <Route path = '/admin/users/' component= {UserListPage}/>
                 <Route path = '/admin/user/edit/:id' component= {UserProfileById}/>
                 <Route path = '/admin/products/' component= {AdminProductListpage}/>
                 <Route path = '/admin/product/edit/:id' component= {AdminProductPage}/>
+                
+
                 
             </Container>
           </main>

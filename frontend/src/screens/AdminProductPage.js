@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 import { Col, Row, Container, Form ,Button, Alert} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -14,10 +15,12 @@ function AdminProductPage({history, location, match}) {
   //Setting up state
   const [name, setName] = useState('') 
   const [description, setDescription] = useState('')
+  const [image, setImage] = useState('')
   const [category, setCategory] = useState('') 
   const [brand, setBrand] = useState('') 
   const [price, setPrice] = useState('') 
   const [countInStock, setCountInStock] = useState('') 
+  const [uploading, setUploading] = useState('') 
 
   
   const userLogin = useSelector(state => state.userLogin)
@@ -49,6 +52,7 @@ function AdminProductPage({history, location, match}) {
     }else{
         setName(product.name)
         setDescription(product.description)
+        setImage(product.image)
         setBrand(product.brand)
         setCategory(product.category)
         setPrice(product.price)
@@ -61,19 +65,52 @@ function AdminProductPage({history, location, match}) {
 
 
   const submit =  (e) => {
-    console.log('edit')
-    e.preventDefault()
+        console.log('edit')
+        console.log(product.image)
+        e.preventDefault()
 
-    dispatch(editProduct({
-        _id: productId,
-        name,
-        description,
-        brand,
-        category,
-        price,
-        countInStock,
-    }))
-  }
+        dispatch(editProduct({
+            _id: productId,
+            name,
+            image,
+            description,
+            brand,
+            category,
+            price,
+            countInStock,
+        }))
+    }
+
+  const submitImageHandler = async (e) =>{
+        const file = e.target.files[0]
+        const formdata = new FormData()
+
+        formdata.append('image', file)
+        formdata.append('productId', productId)
+
+        console.log(file)
+
+        setUploading(true)
+
+        try{
+            const config ={
+                headers: {
+                    'Content-Type' : 'multipart/form-data'
+                }
+            }
+
+            console.log('inside tyr')
+
+            const {data} = await axios.post('/api/products/upload/', formdata, config)
+
+            setImage(data)
+        }catch(error){
+            setUploading(false)
+            console.log('uploading failed')
+        }
+
+    }
+  
 
   return productDetailLoading ? 
     (<Loader/> )
@@ -94,9 +131,32 @@ function AdminProductPage({history, location, match}) {
                 <Form.Control type='name' value={name}  onChange = {(e) => setName(e.target.value)}></Form.Control>
             </Form.Group>
 
+            <Form.Group controlId="formFile">
+                <Form.Label>Image</Form.Label>
+                {/* <Form.Control type="file" onChange={submitImageHandler}/> */}
+            </Form.Group>
+
+            <Form.Group controlId='image'>
+                <Form.Label>Image</Form.Label>
+                <Form.Control
+
+                    type='text'
+                    placeholder='Enter image'
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                />
+
+                <Form.Control type='file' onChange= {submitImageHandler}/>
+                
+
+            </Form.Group>
+
+
+
             <Form.Group>
                 <Form.Label>Brand</Form.Label>
-                <Form.Control type='text' value = {brand} onChange = {(e) => setBrand(e.target.value)}></Form.Control>
+                <Form.Control type='text' value = {brand} onChange = {(e) => setBrand(e.target.value)}>    
+                </Form.Control>
             </Form.Group>
 
             <Form.Group>
