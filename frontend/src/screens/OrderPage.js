@@ -49,8 +49,7 @@ function OrderPage({history}) {
             taxPrice : tax,
             shippingPrice : shippingCost,
             totalPrice : totalPrice,
-            itemPrice : totalItem,   
-
+            itemPrice : totalItem,  
         }))
         console.log('Submit')
         //history.push(`/orders/${}`)
@@ -67,7 +66,8 @@ function OrderPage({history}) {
                         <h6>{shippingAddress.address}, </h6>
                         <h6>PostalCode: {shippingAddress.postalCode}, </h6>
                         <h6>{shippingAddress.city}, </h6>
-                        <h6>{shippingAddress.country}. </h6>
+                        <h6>{shippingAddress.country} </h6>
+                        <h6>{shippingAddress.contactInfo}</h6>
                     </ListGroup.Item>
 
                     <ListGroup.Item className='mb-2'>
@@ -96,7 +96,7 @@ function OrderPage({history}) {
                                     </Col>
 
                                     <Col md ={3}>
-                                        <h6> ${item.price}</h6>
+                                        <h6> &#2547;{item.price}</h6>
                                     </Col>
 
                                     <Col md={1}>
@@ -127,28 +127,28 @@ function OrderPage({history}) {
                     <ListGroup.Item>
                         <Row>
                             <Col md={6}>Total</Col>
-                            <Col md={6}>${totalItem}</Col>
+                            <Col md={6}>&#2547;{totalItem}</Col>
                         </Row>
                     </ListGroup.Item>
 
                     <ListGroup.Item>
                         <Row>
                             <Col md={6}>Shipping Cost</Col>
-                            <Col md={6}>${shippingCost}</Col>
+                            <Col md={6}>&#2547;{shippingCost}</Col>
                         </Row>
                     </ListGroup.Item>
 
                     <ListGroup.Item>
                         <Row>
                             <Col md={6}>Tax</Col>
-                            <Col md={6}>${tax}</Col>
+                            <Col md={6}>&#2547;{tax}</Col>
                         </Row>
                     </ListGroup.Item>
 
                     <ListGroup.Item>
                         <Row>
                             <Col md={6}>SubTotal</Col>
-                            <Col md={6}>${totalPrice}</Col>
+                            <Col md={6}>&#2547;{totalPrice}</Col>
                         </Row>
                     </ListGroup.Item>
 

@@ -41,7 +41,8 @@ function OrderDetailPage({match}) {
                         <h6>{order.shippingAddress.address}, </h6>
                         <h6>PostalCode: {order.shippingAddress.postalCode}, </h6>
                         <h6>{order.shippingAddress.city}, </h6>
-                        <h6>{order.shippingAddress.country}. </h6>
+                        <h6>{order.shippingAddress.country} </h6>
+                        <h6>Phone : {order.shippingAddress.contactInfo} </h6>
                     </ListGroup.Item>
 
                     <ListGroup.Item className='mb-2'>

@@ -169,7 +169,6 @@ def setOrderItem(request):
             taxPrice = data['taxPrice'],
             shippingPrice = data['shippingPrice'],
             totalPrice = data['totalPrice'],
-            
         )
 
         shippingAddress = ShippingAddress.objects.create(
@@ -178,6 +177,7 @@ def setOrderItem(request):
             postalCode = data['shippingAddress']['postalCode'],
             city = data['shippingAddress']['city'],
             country = data['shippingAddress']['country'],
+            contactInfo = data['shippingAddress']['contactInfo']
         )
 
         for i in orderItems:

@@ -37,7 +37,7 @@ function UserListPage() {
                 <thead>
                     <td>ID</td>
                     <td>Username</td>
-                    <td>Name</td>
+                    <td>Email</td>
                     <td>Staff Status</td>
                     <td>Profile</td>
                     <td>Remove user</td>

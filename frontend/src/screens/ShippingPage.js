@@ -10,6 +10,7 @@ function ShippingPage({history}) {
     const [postalCode, setPostalCode] = useState('')
     const [city, setCity] = useState('')
     const [country, setCountry] = useState('')
+    const [contactInfo, setContactInfo] = useState('')
 
     const cart = useSelector(state => state.cart)
     const {shippingAddress} = cart
@@ -19,7 +20,7 @@ function ShippingPage({history}) {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        dispatch(setShippingAddress({address, postalCode, city, country}))
+        dispatch(setShippingAddress({address, postalCode, city, country, contactInfo}))
 
         history.push('/payment')
         console.log('shipping ')
@@ -47,6 +48,11 @@ function ShippingPage({history}) {
                 <Form.Group className='py-3'>
                     <Form.Label>Country</Form.Label>
                     <Form.Control value= {country} onChange ={(e) => setCountry(e.target.value)} type='text'  ></Form.Control>
+                </Form.Group>
+
+                <Form.Group className='py-3'>
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control required value= {contactInfo} onChange ={(e) => setContactInfo(e.target.value)} type='text'  ></Form.Control>
                 </Form.Group>
 
                 <Button className='py-3' type = 'submit' variant="secondary" size="md">Confirm Address</Button>

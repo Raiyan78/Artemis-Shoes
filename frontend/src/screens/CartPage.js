@@ -14,6 +14,9 @@ function CartPage({match, location, history}) {
 
   const quantity = location.search ? Number(location.search.split('=')[1]) : 1
 
+  const userDetail = useSelector(state => state.userLogin)
+  // const { }
+
   //console.log('qty ', quantity)
 
   const cart = useSelector(state => state.cart)
@@ -59,7 +62,7 @@ function CartPage({match, location, history}) {
                   </Col>
 
                   <Col md ={2}>
-                    <h5> ${item.price}</h5>
+                    <h5> &#2547;{item.price}</h5>
                   </Col>
 
                   <Col md = {2}>
@@ -107,7 +110,7 @@ function CartPage({match, location, history}) {
           <ListGroup variant = 'flush'>
             <ListGroup.Item>
               <h1>Total</h1>
-              ${cartItem.reduce((acc, item) => acc +item.quantity * item.price, 0)}
+              &#2547;{cartItem.reduce((acc, item) => acc +item.quantity * item.price, 0)}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -115,7 +118,7 @@ function CartPage({match, location, history}) {
                 <Button 
                   type = 'button' 
                   variant = 'success' 
-                  disabled = {cartItem.length === 0}
+                  disabled = {cartItem.length === 0  }
                   
                   // onClick = {}
                 >
