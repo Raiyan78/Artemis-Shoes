@@ -6,6 +6,6 @@ Web based ecommerce app project for college.
   <li>Clone the repo</li>
   <li>cd Artemis-Shoes </li>
   <li>virtualenv myenv</li>
-  <li>Milk</li>
+  <li>pip install -r requirements.txt</li>
 </ul>
   
