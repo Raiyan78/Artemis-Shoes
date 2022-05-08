@@ -2,6 +2,7 @@
 Web based ecommerce app project for college.
 
 <h2>How to run <h2>
+<h3>Prereq: Node.js and Python installed on your system<h3>
 <ul>
     <li>Clone the repo</li>
     <li>cd Artemis-Shoes</li>
