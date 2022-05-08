@@ -2,7 +2,7 @@
 Web based ecommerce app project for college.
 
 <h2>How to run <h2>
-###Prereq
+
 >Prereq: Node.js and Python installed on your system
 <ul>
     <li>Clone the repo</li>
